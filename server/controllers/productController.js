@@ -2,36 +2,49 @@ const Product = require("../models/ProductModel");
 
 exports.addProduct = async (req, res) => {
   try {
-    const { name, description, size, color, categoryId, subCategoryId } = req.body;
+      const { category, subcategory, productName, price, productCode, description, size, image } = req.body;
 
-    if (!subCategoryId) {
-      return res.status(400).json({ message: "Subcategory are required" });
-    }
+      if (!category || !subcategory || !productName || !price || !productCode || !description || !image) {
+          return res.status(400).json({ message: "All required fields must be filled" });
+      }
 
-    const newProduct = new Product({
-      name,
-      description,
-      size,
-      color,
-      // categoryId,
-      subCategoryId,
-    });
+      const newProduct = new Product({
+          category,
+          subcategory,
+          productName,
+          price,
+          productCode,
+          description,
+          size,
+          image,
+      });
 
-    await newProduct.save();
-    res.status(201).json(newProduct);
+      await newProduct.save();
+      res.status(201).json({ message: "Product added successfully", product: newProduct });
+
   } catch (error) {
-    res.status(500).json({ message: "Error adding product", error: error.message });
+      console.error("Error adding product:", error);
+      res.status(500).json({ message: "Server error, please try again later" });
   }
 };
 
 
+
 exports.getProducts = async (req, res) => {
-  try {
-    const products = await Product.find().populate("categoryId subCategoryId");
-    res.status(200).json(products);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching products", error: error.message });
-  }
+  console.log("Incoming Request:", req.query);
+
+    const { categoryId, subcategoryId } = req.query;
+    if (!categoryId || !subcategoryId) {
+        return res.status(400).json({ error: "Category ID and Subcategory ID are required" });
+    }
+
+    try {
+        const products = await Product.find({ category: categoryId, subcategory: subcategoryId });
+        res.json(products);
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 };
 
 exports.getProductsBySubcategory = async (req, res) => {
@@ -51,3 +64,35 @@ exports.getProductsBySubcategory = async (req, res) => {
       res.status(500).json({ message: "Error fetching products", error });
     }
   };
+
+
+exports.deleteProduct = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const deletedProduct = await Product.findByIdAndDelete(productId);
+
+    if (!deletedProduct) {
+        return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.status(200).json({ message: "Product deleted successfully" });
+  } catch (error) {
+      console.error("Error deleting product:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+exports.updateProduct = async (req, res) => {
+    try {
+      const productId = req.params.id;
+      const updatedProduct = await Product.findByIdAndUpdate(productId, req.body, { new: true });
+
+      if (!updatedProduct) {
+          return res.status(404).json({ message: "Product not found" });
+      }
+
+      res.status(200).json(updatedProduct);
+    } catch (error) {
+        res.status(500).json({ message: "Error updating product", error });
+    }
+}

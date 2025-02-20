@@ -72,6 +72,10 @@ import {
   HistoryOutlined,
   LogoutOutlined,
   LoginOutlined,
+  MessageOutlined,
+  AppstoreOutlined, 
+  FolderOpenOutlined, 
+  ShoppingOutlined,
 } from '@ant-design/icons';
 import { useNavigate, Outlet } from 'react-router-dom';
 
@@ -98,6 +102,24 @@ const MainLayout = () => {
       onClick: () => navigate('/admin/dashboard'),
     },
     {
+      key: 'category',
+      icon: <AppstoreOutlined />,
+      label: 'Category',
+      onClick: () => navigate('/admin/category'),
+    },
+    {
+      key: 'subcategory',
+      icon: <FolderOpenOutlined />,
+      label: 'Subcategories',
+      onClick: () => navigate('/admin/Subcategory'),
+    },
+    {
+      key: 'product',
+      icon: <ShoppingOutlined />,
+      label: 'Product',
+      onClick: () => navigate('/admin/product'),
+    },
+    {
       key: 'users',
       icon: <UserOutlined />,
       label: 'Users',
@@ -106,7 +128,7 @@ const MainLayout = () => {
     {
       key: 'orders',
       icon: <ShoppingCartOutlined />,
-      label: 'Orders',
+      label: 'Orders History',
       onClick: () => navigate('/admin/orders'),
     },
     {
@@ -114,6 +136,12 @@ const MainLayout = () => {
       icon: <HistoryOutlined />,
       label: 'Interested Users',
       onClick: () => navigate('/admin/interested'),
+    },
+    {
+      key: 'inquiries',
+      icon: <MessageOutlined />,
+      label: 'Inquiries',
+      onClick: () => navigate('/admin/inquiries'),
     },
   ];
 
@@ -123,7 +151,7 @@ const MainLayout = () => {
         <div style={{ 
           height: 32, 
           margin: 16, 
-          background: 'rgba(255, 255, 255, 0.2)',
+          // background: 'rgba(255, 255, 255, 0.2)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -143,15 +171,15 @@ const MainLayout = () => {
       <Layout>
         <Header style={{ 
           padding: '0 16px', 
-          background: '#fff', 
+          background: '#d8e4f2', 
           display: 'flex', 
           justifyContent: 'space-between',
           alignItems: 'center'
         }}>
-          <div style={{ color: '#1890ff', fontSize: '18px', fontWeight: 'bold' }}>
+          <div style={{ color: 'black', fontSize: '22px', fontWeight: 'bold',padding:'5px 0px 0px 20px' }}>
             {isAuthenticated ? 'Welcome, Admin' : 'Please Login'}
           </div>
-          <Space>
+          <Space style={{padding:'30px 10px 0px 0px'}}>
             {isAuthenticated ? (
               <Button 
                 type="primary" 

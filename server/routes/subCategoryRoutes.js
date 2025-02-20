@@ -1,13 +1,31 @@
 const express = require("express");
-const {getSubcategories, addSubCategory, getSubCategories } = require("../controllers/subCategoryController");
+const multer = require("multer");
+const path = require("path");
+const {getSubcategories, addSubCategory, getSubCategories, deleteCategory, updateCategory } = require("../controllers/subCategoryController");
+
+// Initialize multer for file uploads
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'uploads/'); // Path to save uploaded files
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname)); // Generate a unique filename
+    }
+  });
+  
+  const upload = multer({ storage: storage });
 
 const router = express.Router();
 
 // Add Subcategory Route
-router.post("/add", addSubCategory);
+router.post("/add", upload.single("image"), addSubCategory);
 
 // Get Subcategories Route
 router.get("/get", getSubCategories);
+
+router.delete("/delete/:id", deleteCategory);
+
+router.put('/update/:id', updateCategory)
 
 router.get("/:categoryName", getSubcategories);
 

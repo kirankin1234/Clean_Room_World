@@ -172,7 +172,6 @@ const handleProductSubmit = async (values) => {
   }
 };
 
-
   const steps = [
     {
       title: 'Category',
@@ -309,7 +308,7 @@ const handleProductSubmit = async (values) => {
 
   return (
     <div>
-      <Steps current={currentStep}>
+      {/* <Steps current={currentStep}>
         {steps.map(item => (
           <Step key={item.title} title={item.title} />
         ))}
@@ -323,7 +322,7 @@ const handleProductSubmit = async (values) => {
             Previous
           </Button>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

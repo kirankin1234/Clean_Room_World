@@ -60,7 +60,7 @@ const App = () => {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/contact_form" element={<ContactForm />} />
           <Route path="/category/:categoryName/:subcategory" element={<ProductList />} />
-          <Route path="/category/:categoryName" element={<Category />} />
+          <Route path="/category/:id" element={<Category />} />
           <Route path="/product/:productId" element={<Product />} />
 
           {/* ✅ Catch-All Route for Consumer Inside AntdLayout */}

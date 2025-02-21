@@ -19,7 +19,11 @@ exports.registerConsumer = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newConsumer = new Consumer({ firstName, lastName, email, password: hashedPassword });
+    const newConsumer = new Consumer({ 
+      firstName, 
+      lastName, 
+      email, 
+      password: hashedPassword });
 
     await newConsumer.save();
     res.status(201).json({ message: 'User registered successfully' });
@@ -51,7 +55,7 @@ exports.loginConsumer = async (req, res) => {
     }
 
     const token = jwt.sign({ id: consumer._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-    res.status(200).json({ token, message: 'Login successful' });
+    res.status(200).json({ token, message: 'Consume Login successfully' });
 
   } catch (error) {
     console.error('Login Error:', error);

@@ -44,19 +44,21 @@ const AdminSignup = () => {
       justifyContent: 'center', 
       alignItems: 'center', 
       minHeight: '100vh',
-      background: '#f0f2f5'
+      background: '#f0f2f5',
+      // margin:'20px'
     }}>
-      <Card title="Admin Signup" style={{ width: 400, boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
+      <Card title="Admin Signup" style={{ width: '400px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', padding:'30px 0px 0px 0px' }}>
         <Form
           name="signup"
           onFinish={onFinish}
           layout="vertical"
         >
           <Form.Item
+           style={{padding:'0px 0px 0px 0px', height:'50px'}}
             name="name"
             rules={[{ required: true, message: 'Please input your name!' }]}
           >
-            <Input prefix={<UserOutlined />} placeholder="Name" size="large" />
+            <Input style={{padding:'10px 0px 0px 0px'}} prefix={<UserOutlined />} placeholder="Name" size="large" />
           </Form.Item>
           <Form.Item
             name="email"

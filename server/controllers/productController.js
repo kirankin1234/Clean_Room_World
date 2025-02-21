@@ -1,3 +1,4 @@
+const { message } = require("statuses");
 const Product = require("../models/ProductModel");
 
 exports.addProduct = async (req, res) => {
@@ -17,6 +18,7 @@ exports.addProduct = async (req, res) => {
           description,
           size,
           image,
+          // message: 'Product added successfully'
       });
 
       await newProduct.save();
@@ -31,16 +33,19 @@ exports.addProduct = async (req, res) => {
 
 
 exports.getProducts = async (req, res) => {
-  console.log("Incoming Request:", req.query);
+  console.log("Incoming Request:", req.body);
 
-    const { categoryId, subcategoryId } = req.query;
+    const { categoryId, subcategoryId } = req.body;
     if (!categoryId || !subcategoryId) {
         return res.status(400).json({ error: "Category ID and Subcategory ID are required" });
     }
 
     try {
         const products = await Product.find({ category: categoryId, subcategory: subcategoryId });
-        res.json(products);
+        res.json({
+          products,
+          message : "Products fetched successfully"
+        });
     } catch (error) {
         console.error("Error fetching products:", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -91,7 +96,11 @@ exports.updateProduct = async (req, res) => {
           return res.status(404).json({ message: "Product not found" });
       }
 
-      res.status(200).json(updatedProduct);
+      res.status(200).json({
+        updatedProduct,
+        message: "Product updated successfully",
+      
+      });
     } catch (error) {
         res.status(500).json({ message: "Error updating product", error });
     }

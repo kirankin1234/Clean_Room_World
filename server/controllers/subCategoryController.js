@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const SubCategory = require("../models/SubcategoryModel");
 const Category = require("../models/CategoryModel");
+const { message } = require("statuses");
 
 // Add Subcategory to Database
 const addSubCategory = async (req, res) => {
@@ -25,7 +26,9 @@ const addSubCategory = async (req, res) => {
     });
 
     await subCategory.save();
-    res.status(201).json(subCategory);
+    res.status(201).json({
+      subCategory,
+      message: "Subcategory added successfully",});
   } catch (error) {
     console.error("Backend Error:", error.message);
     res.status(500).json({ message: "Error adding subcategory", error: error.message });
@@ -36,7 +39,10 @@ const addSubCategory = async (req, res) => {
 const getSubCategories = async (req, res) => {
   try {
     const subCategories = await SubCategory.find();
-    res.json(subCategories);
+    res.json({
+      subCategories,
+      message: "Subcategories fetched successfully",
+    });
   } catch (error) {
     res.status(500).json({ message: "Error fetching subcategories", error });
   }

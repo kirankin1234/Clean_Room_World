@@ -2,6 +2,7 @@ const Admin = require('../models/Admin');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Consumer = require('../models/Consumer');
+const { message } = require('statuses');
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -25,6 +26,7 @@ const loginAdmin = async (req, res) => {
         name: admin.name,
         email: admin.email,
         token: token,
+        message: 'Admin login successfully'
       });
     } else {
       res.status(401).json({ message: 'Invalid email or password' });
@@ -61,6 +63,7 @@ const registerAdmin = async (req, res) => {
         name: admin.name,
         email: admin.email,
         token: token,
+        message: 'Admin created successfully',
       });
     }
   } catch (error) {

@@ -1,3 +1,4 @@
+const { message } = require('statuses');
 const Category = require('../models/CategoryModel');
 const Subcategory = require('../models/SubcategoryModel');
 
@@ -103,7 +104,11 @@ exports.updatedCategory = async (req, res) => {
       return res.status(404).json({ message: "Category not found" });
     }
 
-    res.json(updatedCategory);
+    // res.status(200).json(updatedCategory);
+    res.status(200).json({
+      message: "Category updated successfully",
+      updatedCategory,
+    });
   } catch (error) {
     console.error("Error updating category:", error);
     res.status(500).json({ message: "Internal Server Error" });

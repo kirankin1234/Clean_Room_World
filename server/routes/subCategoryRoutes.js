@@ -23,11 +23,14 @@ router.post("/add", upload.single("image"), addSubCategory);
 // Get Subcategories Route
 router.get("/get", getSubCategories);
 
+// Get Subcategories by Category Id
+router.get("/get/:categoryId", getSubcategories);
+
 router.delete("/delete/:id", deleteCategory);
 
 router.put('/update/:id', updateCategory)
 
-router.get("/:categoryName", getSubcategories);
+
 
 
 module.exports = router;

@@ -11,6 +11,7 @@ const AddProduct = () => {
 
   const [categories, setCategories] = useState([]); // Store categories
   const [subcategories, setSubcategories] = useState([]); // Store subcategories
+  const [allSubcategories, setAllSubcategories] = useState([]); // Store all subcategories
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false); 
@@ -32,15 +33,35 @@ const AddProduct = () => {
   // Fetch subcategories based on selected category
   useEffect(() => {
     if (selectedCategory) {
-        axios.get(`http://localhost:5001/api/subcategory/get?categoryId=${selectedCategory}`)
-            .then((response) => {
-                setSubcategories(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching subcategories:", error);
-            });
+      axios
+        .get(`http://localhost:5001/api/subcategory/get?categoryId=${selectedCategory}`)
+        .then((response) => {
+          if (Array.isArray(response.data)) {
+            setSubcategories(response.data);
+          } else {
+            console.error("Unexpected response format:", response.data);
+            setSubcategories([]);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching subcategories:", error);
+          setSubcategories([]);
+        });
+    } else {
+      setSubcategories([]); // Clear subcategories when no category is selected
     }
   }, [selectedCategory]);
+//   useEffect(() => {
+//     if (selectedCategory) {
+//         axios.get(`http://localhost:5001/api/subcategory/get?categoryId=${selectedCategory}`)
+//             .then((response) => {
+//                 setSubcategories(response.data);
+//             })
+//             .catch((error) => {
+//                 console.error("Error fetching subcategories:", error);
+//             });
+//     }
+//   }, [selectedCategory]);
 
    // Handle Category Selection
    const handleCategoryChange = (categoryId) => {

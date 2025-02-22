@@ -13,13 +13,13 @@ Navbar.css
     background-color: #40476D;
     color: white;
     /* padding: 15px 30px; */
-    font-size: 20px;
+    font-size: 25px;
   }
   
   .navbar-certification {
     font-weight: bold;
     margin-left: 90px;
-    font-size: 40px;
+    font-size: 25px;
     color: white;
   }
   
@@ -30,7 +30,7 @@ Navbar.css
     font-weight: bold;
     text-decoration:none;
     color: white;
-    font-size: 28px;
+    font-size: 20px;
   }
   /* .navbar-contact span:hover {
     text-decoration: underline;
@@ -59,9 +59,9 @@ Navbar.css
   .search-input {
     padding: 5px;
     border: 1px solid #ddd;
-    border-radius: 20px;
+    border-radius: 5px;
     width: 400px;
-    height: 40px;
+    height: 30px;
   }
   
   .search-button {
@@ -95,8 +95,8 @@ Navbar.css
     gap: 15px;
     padding: 10px 20px;
     background-color: #40476D;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 20px;
+    
   }
   
   .navbar-links a {

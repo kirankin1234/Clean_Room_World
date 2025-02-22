@@ -17,7 +17,7 @@ const Navbar = () => {
     return (
       <Layout className="navbar">
         <Header className="navbar-top" >
-          <div className="navbar-certification">Clean Room Cart</div>
+          <div className="navbar-certification">Cleanroomcart</div>
           <div className="navbar-contact">
             <Link style={{textDecoration: 'none'}} to="/contact_form"><span>Contact Us</span></Link>
             <span> | </span>

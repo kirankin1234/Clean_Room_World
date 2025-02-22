@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Form, Input, Button, Select, Upload, message, Steps } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
+
 const { Step } = Steps;
 
 const Dashboard = () => {
@@ -14,22 +15,16 @@ const Dashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [users, setUsers] = useState([]); // ✅ Add state for users
+  // const [Categoreis, setCategories] = useState([]); // ✅ Add state for products
 
-  // ✅ Load categories & subcategories from localStorage on mount
-  useEffect(() => {
-    const storedCategories = JSON.parse(localStorage.getItem("categories")) || [];
-    const storedSubCategories = JSON.parse(localStorage.getItem("subCategories")) || [];
-  
-    setCategories(storedCategories);
-    setSubCategories(storedSubCategories);
-  }, []); 
+
   
   useEffect(() => {
+    
     fetch("http://localhost:5001/api/subcategory/get")
       .then(response => response.json())
       .then(data => {
         setSubCategories(data);
-        localStorage.setItem("subCategories", JSON.stringify(data)); // ✅ Store in localStorage
       })
       .catch(error => console.error("Error fetching subcategories:", error));
   }, []);
@@ -39,7 +34,6 @@ const Dashboard = () => {
       .then((response) => response.json())
       .then((data) => {
         setCategories(data);
-        localStorage.setItem("categories", JSON.stringify(data)); // ✅ Store in localStorage for persistence
       })
       .catch((error) => console.error("Error fetching categories:", error));
   }, []);

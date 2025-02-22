@@ -1,68 +1,3 @@
-// import React from 'react';
-// import { Layout, Menu } from 'antd';
-// import {
-//   HomeOutlined,
-//   UserOutlined,
-//   ShoppingCartOutlined,
-//   HistoryOutlined,
-// } from '@ant-design/icons';
-// import { useNavigate, Outlet } from 'react-router-dom';
-
-// const { Header, Sider, Content } = Layout;
-
-// const MainLayout = () => {
-//   const navigate = useNavigate();
-
-//   const menuItems = [
-//     {
-//       key: 'dashboard',
-//       icon: <HomeOutlined />,
-//       label: 'Dashboard',
-//       onClick: () => navigate('/dashboard'),
-//     },
-//     {
-//       key: 'users',
-//       icon: <UserOutlined />,
-//       label: 'Users',
-//       onClick: () => navigate('/users'),
-//     },
-//     {
-//       key: 'orders',
-//       icon: <ShoppingCartOutlined />,
-//       label: 'Orders',
-//       onClick: () => navigate('/orders'),
-//     },
-//     {
-//       key: 'interested',
-//       icon: <HistoryOutlined />,
-//       label: 'Interested Users',
-//       onClick: () => navigate('/interested'),
-//     },
-//   ];
-
-//   return (
-//     <Layout style={{ minHeight: '100vh' }}>
-//       <Sider>
-//         <div style={{ height: 32, margin: 16, background: 'rgba(255, 255, 255, 0.2)' }} />
-//         <Menu
-//           theme="dark"
-//           mode="inline"
-//           defaultSelectedKeys={['dashboard']}
-//           items={menuItems}
-//         />
-//       </Sider>
-//       <Layout>
-//         <Header style={{ padding: 0, background: '#fff' }} />
-//         <Content style={{ margin: '24px 16px', padding: 24, background: '#fff' }}>
-//           <Outlet />
-//         </Content>
-//       </Layout>
-//     </Layout>
-//   );
-// };
-
-// export default MainLayout; 
-
 import React from 'react';
 import { Layout, Menu, Button, Space } from 'antd';
 import {
@@ -78,6 +13,7 @@ import {
   ShoppingOutlined,
 } from '@ant-design/icons';
 import { useNavigate, Outlet } from 'react-router-dom';
+import './Sidebar.css'; // Importing separate CSS file
 
 const { Header, Sider, Content } = Layout;
 
@@ -95,113 +31,47 @@ const MainLayout = () => {
   };
 
   const menuItems = [
-    {
-      key: 'dashboard',
-      icon: <HomeOutlined />,
-      label: 'Dashboard',
-      onClick: () => navigate('/admin/dashboard'),
-    },
-    {
-      key: 'category',
-      icon: <AppstoreOutlined />,
-      label: 'Category',
-      onClick: () => navigate('/admin/category'),
-    },
-    {
-      key: 'subcategory',
-      icon: <FolderOpenOutlined />,
-      label: 'Subcategories',
-      onClick: () => navigate('/admin/Subcategory'),
-    },
-    {
-      key: 'product',
-      icon: <ShoppingOutlined />,
-      label: 'Product',
-      onClick: () => navigate('/admin/product'),
-    },
-    {
-      key: 'users',
-      icon: <UserOutlined />,
-      label: 'Users',
-      onClick: () => navigate('/admin/users'),
-    },
-    {
-      key: 'orders',
-      icon: <ShoppingCartOutlined />,
-      label: 'Orders History',
-      onClick: () => navigate('/admin/orders'),
-    },
-    {
-      key: 'interested',
-      icon: <HistoryOutlined />,
-      label: 'Interested Users',
-      onClick: () => navigate('/admin/interested'),
-    },
-    {
-      key: 'inquiries',
-      icon: <MessageOutlined />,
-      label: 'Inquiries',
-      onClick: () => navigate('/admin/inquiries'),
-    },
+    { key: 'dashboard', icon: <HomeOutlined />, label: 'Dashboard', onClick: () => navigate('/admin/dashboard') },
+    { key: 'category', icon: <AppstoreOutlined />, label: 'Category', onClick: () => navigate('/admin/category') },
+    { key: 'subcategory', icon: <FolderOpenOutlined />, label: 'Subcategories', onClick: () => navigate('/admin/Subcategory') },
+    { key: 'product', icon: <ShoppingOutlined />, label: 'Product', onClick: () => navigate('/admin/product') },
+    { key: 'users', icon: <UserOutlined />, label: 'Users', onClick: () => navigate('/admin/users') },
+    { key: 'orders', icon: <ShoppingCartOutlined />, label: 'Orders History', onClick: () => navigate('/admin/orders') },
+    { key: 'interested', icon: <HistoryOutlined />, label: 'Interested Users', onClick: () => navigate('/admin/interested') },
+    { key: 'inquiries', icon: <MessageOutlined />, label: 'Inquiries', onClick: () => navigate('/admin/inquiries') },
   ];
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider>
-        <div style={{ 
-          height: 32, 
-          margin: 16, 
-          // background: 'rgba(255, 255, 255, 0.2)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: 'white',
-          fontSize: '18px',
-          fontWeight: 'bold'
-        }}>
-          Admin Panel
-        </div>
+    <Layout className="main-layout">
+      <Sider className="sidebar">
+        <div className="sidebar-header">Admin Panel</div>
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['dashboard']}
           items={menuItems}
+          className="sidebar-menu"
         />
       </Sider>
       <Layout>
-        <Header style={{ 
-          padding: '0 16px', 
-          background: '#d8e4f2', 
-          display: 'flex', 
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}>
-          <div style={{ color: 'black', fontSize: '22px', fontWeight: 'bold',padding:'5px 0px 0px 20px' }}>
-            {isAuthenticated ? 'Welcome, Admin' : 'Please Login'}
-          </div>
-          <Space style={{padding:'30px 10px 0px 0px'}}>
+        <Header className="header">
+        <div className="header-title" style={{ color: "#7C444F" }}>
+         {isAuthenticated ? "Welcome, Admin" : "Please Login"}
+        </div>
+
+          <Space className="header-actions">
             {isAuthenticated ? (
-              <Button 
-                type="primary" 
-                danger
-                icon={<LogoutOutlined />}
-                onClick={handleLogout}
-              >
+              <Button type="primary" danger icon={<LogoutOutlined />} onClick={handleLogout}>
                 Logout
               </Button>
             ) : (
-              <Button 
-                // style={{paddingTop:'20px'}}
-                type="primary"
-                icon={<LoginOutlined />}
-                onClick={handleLogin}
-              >
+              <Button type="primary" icon={<LoginOutlined />} onClick={handleLogin}>
                 Login
               </Button>
             )}
           </Space>
         </Header>
-        <Content style={{ margin: '24px 16px', padding: 24, background: '#fff' }}>
+        <Content className="content">
           <Outlet />
         </Content>
       </Layout>
@@ -209,4 +79,4 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout; 
+export default MainLayout;

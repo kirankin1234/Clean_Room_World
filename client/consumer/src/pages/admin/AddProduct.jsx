@@ -7,7 +7,8 @@ import { useState, useEffect } from 'react';
 const { TextArea } = Input;
 
 
-const AddProduct = () => {
+const AddProduct = () => 
+    {
 
   const [categories, setCategories] = useState([]); // Store categories
   const [subcategories, setSubcategories] = useState([]); // Store subcategories
@@ -18,6 +19,14 @@ const AddProduct = () => {
   const [loading, setLoading] = useState(false); // Show loader while fetching
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     axios.get("http://localhost:5001/api/category/get")
@@ -60,6 +69,21 @@ const AddProduct = () => {
     setSelectedSubcategory(value);
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   const handleUpdateProduct = async (values, productId) => {
     try {
         const response = await axios.put(`http://localhost:5001/api/product/update/${productId}`, values);

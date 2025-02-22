@@ -21,6 +21,7 @@ import AddSubcategory from "./pages/admin/AddSubcategory";
 import AddProduct from "./pages/admin/AddProduct";
 import Inquiry from "./pages/admin/Inquiry";
 
+
 // Authentication Protection
 const ProtectedRoute = ({ children, role }) => {
   const adminToken = localStorage.getItem("adminToken");
@@ -61,7 +62,7 @@ const App = () => {
           <Route path="/contact_form" element={<ContactForm />} />
           <Route path="/category/:categoryName/:subcategory" element={<ProductList />} />
           <Route path="/category/:categoryName" element={<Category />} />
-          <Route path="/product/:productId" element={<Product />} />
+
 
           {/* ✅ Catch-All Route for Consumer Inside AntdLayout */}
           {/* <Route path="*" element={<Navigate to="/login" />} /> */}
@@ -84,91 +85,6 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-// import React from 'react';
-// import './App.css';
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import Login from './pages/Login/login';
-// import Signup from './pages/Signup/signup';
-// import Home from './pages/Home/home';
-// import Carts from './pages/Carts';
-// import ContactForm from './component/Contact_Form/Contact_Form';
-// import AntdLayout from './component/Layout/Layout';
-// import Product from './component/Product/Product';
-// import Category from './component/Category/Category';
-// import ProductList from './component/ProductList/ProductList';
-
-// const App = () => {
-//   return (
-//     <Router>
-//       <Routes>
-//         {/* Routes with AntdLayout */}
-//         <Route element={<AntdLayout />}>
-//           <Route path="/" element={<Home />} />
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/signup" element={<Signup />} />
-//           <Route path="/cart" element={<Carts />} />
-//           <Route path="/contact_form" element={<ContactForm />} />
-//           <Route path="/category/:categoryName/:subcategory" element={<ProductList />} />
-//           <Route path="/category/:categoryName" element={<Category />} />
-//           {/* Simplified Product Details Route */}
-//           <Route path="/product/:productId" element={<Product />} />
-//         </Route>
-//       </Routes>
-//     </Router>
-//   );
-// };
-
-// export default App;
-
-
-
-// import React from 'react'
-// import './App.css'
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-// import Login from './pages/Login/login'
-// import Signup from './pages/Signup/signup'
-// import Home from './pages/Home/home'
-// import Carts from './pages/Carts'
-// import ContactForm from './component/Contact_Form/Contact_Form'
-// import AntdLayout from './component/Layout/Layout'
-// import Product from './component/Product/Product'
-// import Category from './component/Category/Category'
-// import ProductList from './component/ProductList/ProductList'
-// // import Navbar from './component/Navbar/Navbar'
-
-// const App = () => {
-//   return (
-//     <Router>
-//       <Routes>
-//         <Route element={<AntdLayout />}>
-//           <Route path="/" element={<Home />} />
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/signup" element={<Signup />} />
-//           {/* <Route path="/" element={<AntdLayout />}> */}
-//            {/* Dynamic category route */}
-//           <Route path="/category/:categoryName" element={<Category />} />
-//           <Route path="/category/:categoryName/:subcategory" element={<ProductList />} />
-//               <Route path="/category/:categoryName/:subcategory/product/:productId" element={<Product />} />
-//           {/* <Route path="/category/:subcategory" element={<ProductList />} /> */}
-
-//           <Route path="/cart" element={<Carts />} />
-//           <Route path="/contact_form" element={<ContactForm />} />
-//         </Route>
-//       </Routes>
-//     </Router>
-
-//   )
-// }
-
-// export default App
-
-
-// {/* <Route path="/product" element={<Product />} /> */}
-
 
 
 

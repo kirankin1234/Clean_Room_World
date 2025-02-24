@@ -1,70 +1,5 @@
-// import React from 'react';
-// import { Layout, Menu } from 'antd';
-// import {
-//   HomeOutlined,
-//   UserOutlined,
-//   ShoppingCartOutlined,
-//   HistoryOutlined,
-// } from '@ant-design/icons';
-// import { useNavigate, Outlet } from 'react-router-dom';
-
-// const { Header, Sider, Content } = Layout;
-
-// const MainLayout = () => {
-//   const navigate = useNavigate();
-
-//   const menuItems = [
-//     {
-//       key: 'dashboard',
-//       icon: <HomeOutlined />,
-//       label: 'Dashboard',
-//       onClick: () => navigate('/dashboard'),
-//     },
-//     {
-//       key: 'users',
-//       icon: <UserOutlined />,
-//       label: 'Users',
-//       onClick: () => navigate('/users'),
-//     },
-//     {
-//       key: 'orders',
-//       icon: <ShoppingCartOutlined />,
-//       label: 'Orders',
-//       onClick: () => navigate('/orders'),
-//     },
-//     {
-//       key: 'interested',
-//       icon: <HistoryOutlined />,
-//       label: 'Interested Users',
-//       onClick: () => navigate('/interested'),
-//     },
-//   ];
-
-//   return (
-//     <Layout style={{ minHeight: '100vh' }}>
-//       <Sider>
-//         <div style={{ height: 32, margin: 16, background: 'rgba(255, 255, 255, 0.2)' }} />
-//         <Menu
-//           theme="dark"
-//           mode="inline"
-//           defaultSelectedKeys={['dashboard']}
-//           items={menuItems}
-//         />
-//       </Sider>
-//       <Layout>
-//         <Header style={{ padding: 0, background: '#fff' }} />
-//         <Content style={{ margin: '24px 16px', padding: 24, background: '#fff' }}>
-//           <Outlet />
-//         </Content>
-//       </Layout>
-//     </Layout>
-//   );
-// };
-
-// export default MainLayout; 
-
-import React from 'react';
-import { Layout, Menu, Button, Space } from 'antd';
+import React from "react";
+import { Layout, Menu, Button, Space } from "antd";
 import {
   HomeOutlined,
   UserOutlined,
@@ -73,116 +8,135 @@ import {
   LogoutOutlined,
   LoginOutlined,
   MessageOutlined,
-  AppstoreOutlined, 
-  FolderOpenOutlined, 
+  AppstoreOutlined,
+  FolderOpenOutlined,
   ShoppingOutlined,
-} from '@ant-design/icons';
-import { useNavigate, Outlet } from 'react-router-dom';
+} from "@ant-design/icons";
+import { useNavigate, Outlet } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = () => {
   const navigate = useNavigate();
-  const isAuthenticated = localStorage.getItem('adminToken');
+  const isAuthenticated = localStorage.getItem("adminToken");
 
   const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    navigate('/login');
+    localStorage.removeItem("adminToken");
+    navigate("/login");
   };
 
   const handleLogin = () => {
-    navigate('/login');
+    navigate("/login");
   };
 
   const menuItems = [
     {
-      key: 'dashboard',
+      key: "dashboard",
       icon: <HomeOutlined />,
-      label: 'Dashboard',
-      onClick: () => navigate('/admin/dashboard'),
+      label: "Dashboard",
+      onClick: () => navigate("/admin/dashboard"),
     },
     {
-      key: 'category',
+      key: "category",
       icon: <AppstoreOutlined />,
-      label: 'Category',
-      onClick: () => navigate('/admin/category'),
+      label: "Category",
+      onClick: () => navigate("/admin/category"),
     },
     {
-      key: 'subcategory',
+      key: "subcategory",
       icon: <FolderOpenOutlined />,
-      label: 'Subcategories',
-      onClick: () => navigate('/admin/Subcategory'),
+      label: "Subcategories",
+      onClick: () => navigate("/admin/Subcategory"),
     },
     {
-      key: 'product',
+      key: "product",
       icon: <ShoppingOutlined />,
-      label: 'Product',
-      onClick: () => navigate('/admin/product'),
+      label: "Product",
+      onClick: () => navigate("/admin/product"),
     },
     {
-      key: 'users',
+      key: "users",
       icon: <UserOutlined />,
-      label: 'Users',
-      onClick: () => navigate('/admin/users'),
+      label: "Users",
+      onClick: () => navigate("/admin/users"),
     },
     {
-      key: 'orders',
+      key: "orders",
       icon: <ShoppingCartOutlined />,
-      label: 'Orders History',
-      onClick: () => navigate('/admin/orders'),
+      label: "Orders History",
+      onClick: () => navigate("/admin/orders"),
     },
     {
-      key: 'interested',
+      key: "interested",
       icon: <HistoryOutlined />,
-      label: 'Interested Users',
-      onClick: () => navigate('/admin/interested'),
+      label: "Interested Users",
+      onClick: () => navigate("/admin/interested"),
     },
     {
-      key: 'inquiries',
+      key: "inquiries",
       icon: <MessageOutlined />,
-      label: 'Inquiries',
-      onClick: () => navigate('/admin/inquiries'),
+      label: "Inquiries",
+      onClick: () => navigate("/admin/inquiries"),
     },
   ];
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider>
-        <div style={{ 
-          height: 32, 
-          margin: 16, 
-          // background: 'rgba(255, 255, 255, 0.2)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: 'white',
-          fontSize: '18px',
-          fontWeight: 'bold'
-        }}>
+    <Layout style={{ minHeight: "100vh" }}>
+      <Sider
+        style={{
+          background: "#7C444F",
+          paddingTop: "16px",
+        }}
+      >
+        <div
+          style={{
+            height: "50px",
+            margin: "16px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "white",
+            fontSize: "18px",
+            fontWeight: "bold",
+          }}
+        >
           Admin Panel
         </div>
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={['dashboard']}
+          defaultSelectedKeys={["dashboard"]}
           items={menuItems}
+          style={{
+            background: "#7C444F",
+            color: "#F5F5F5",
+          }}
         />
       </Sider>
       <Layout>
-        <Header style={{ 
-          padding: '0 16px', 
-          background: '#d8e4f2', 
-          display: 'flex', 
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}>
-          <div style={{ color: 'black', fontSize: '22px', fontWeight: 'bold',padding:'5px 0px 0px 20px' }}>
-            {isAuthenticated ? 'Welcome, Admin' : 'Please Login'}
+        <Header
+          style={{
+            padding: "0 16px",
+            background: "#F39E60",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              color: "#7C444F",
+              fontSize: "22px",
+              fontWeight: "bold",
+              padding: "5px 20px",
+            }}
+          >
+            {isAuthenticated ? "Welcome, Admin" : "Please Login"}
           </div>
-          <Space style={{padding:'30px 10px 0px 0px'}}>
+          <Space style={{ padding: "10px 20px" }}>
             {isAuthenticated ? (
-              <Button 
-                type="primary" 
+              <Button
+                type="primary"
                 danger
                 icon={<LogoutOutlined />}
                 onClick={handleLogout}
@@ -190,8 +144,7 @@ const MainLayout = () => {
                 Logout
               </Button>
             ) : (
-              <Button 
-                // style={{paddingTop:'20px'}}
+              <Button
                 type="primary"
                 icon={<LoginOutlined />}
                 onClick={handleLogin}
@@ -201,7 +154,13 @@ const MainLayout = () => {
             )}
           </Space>
         </Header>
-        <Content style={{ margin: '24px 16px', padding: 24, background: '#fff' }}>
+        <Content
+          style={{
+            margin: "24px 16px",
+            padding: "24px",
+            background: "#fff",
+          }}
+        >
           <Outlet />
         </Content>
       </Layout>
@@ -209,4 +168,4 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout; 
+export default MainLayout;

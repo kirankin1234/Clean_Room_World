@@ -26,6 +26,7 @@ const AddSubcategory = () => {
         axios.get("http://localhost:5001/api/category/get")
             .then((response) => {
                 console.log("Fetched categories:", response.data); // Debugging log
+                console.log("Fetched categories:", response.data); // Debugging log
                 setCategories(response.data);
             })
             .catch((error) => {
@@ -63,7 +64,25 @@ const AddSubcategory = () => {
             console.error("Error fetching subcategories:", error);
             setSubcategories([]); // Reset to avoid undefined issues
         });
+        .then((response) => {
+            console.log("Fetched subcategories:", response.data); 
+            if (Array.isArray(response.data.subCategories)) {
+                setSubcategories(response.data.subCategories); 
+            } else {
+                console.error("Subcategories is not an array:", response.data);
+                setSubcategories([]); // Reset to an empty array if incorrect format
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching subcategories:", error);
+            setSubcategories([]); // Reset to avoid undefined issues
+        });
     };
+
+    // const handleCategoryChange = (categoryId) => {
+    //     const filteredSubcategories = allSubcategories.filter(sub => sub.categoryId === categoryId);
+    //     setSubcategories(filteredSubcategories);
+    // };
 
     // const handleCategoryChange = (categoryId) => {
     //     const filteredSubcategories = allSubcategories.filter(sub => sub.categoryId === categoryId);
@@ -140,9 +159,19 @@ const AddSubcategory = () => {
     //     const { name, value } = e.target;
     //     setEditingSubcategory((prev) => ({ ...prev, [name]: value }));
     // };
+    // const handleEditChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setEditingSubcategory((prev) => ({ ...prev, [name]: value }));
+    // };
 
     const handleModalSubmit = () => {
+        if (!selectedSubcategory || !selectedSubcategory._id) {
+            console.error("Invalid subcategory data:", selectedSubcategory);
+            return;
+        }
+    
         console.log("Updated Subcategory: ", selectedSubcategory); // Log data before submitting
+        
         axios.put(`http://localhost:5001/api/subcategory/update/${selectedSubcategory._id}`, selectedSubcategory)
             .then(response => {
                 console.log("Subcategory updated:", response.data);
@@ -150,9 +179,14 @@ const AddSubcategory = () => {
                 fetchSubcategories(); // Refresh subcategories after update
             })
             .catch(error => {
-                console.error("Error updating subcategory:", error);  // More detailed error logging
+                console.error("Error updating subcategory:", error.response ? error.response.data : error);
             });
     };
+    
+
+
+
+
    
     const handleDelete = (subcategoryId) => {
         axios.delete(`http://localhost:5001/api/subcategory/delete/${subcategoryId}`)
@@ -166,6 +200,10 @@ const AddSubcategory = () => {
     };
 
     // Group subcategories by categoryId
+    // const groupedSubcategories = categories.map(category => ({
+    //     ...category,
+    //     subcategories: subcategories.filter(sub => sub.categoryId === category._id)
+    // }));
     // const groupedSubcategories = categories.map(category => ({
     //     ...category,
     //     subcategories: subcategories.filter(sub => sub.categoryId === category._id)
@@ -233,6 +271,7 @@ const AddSubcategory = () => {
 
                         {/* Subcategories List */}
                         <div style={{ padding: '10px' }}>
+                            {subcategories.filter(sub => sub.categoryId === category._id).map((sub)=> (
                             {subcategories.filter(sub => sub.categoryId === category._id).map((sub)=> (
                                 <div key={sub._id} style={{
                                     display: 'flex',

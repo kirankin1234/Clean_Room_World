@@ -1,5 +1,5 @@
 .footer {
-    background-color: #c1cbf6;
+    background-color: #e5e6ea;
     padding: 20px 10px;
     text-align: center;
     font-family: "Raleway", sans-serif;
@@ -13,7 +13,10 @@
     max-width: 1100px;
     /* height: 250px; */
     margin: auto;
-    font-size: 16px;
+    font-size: 14px;
+    /* background-color: #adb4d2; */
+    height: 176px;
+    padding-top: 16px;
   }
   
   .footer-section {
@@ -23,12 +26,13 @@
   
   .footer-section h6 {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
+    margin: 5px;
   }
   
   .footer-section hr {
     width: 130px;
-    margin: 30px auto;
+    margin: 10px auto;
     border: 1px solid #000;
   }
   

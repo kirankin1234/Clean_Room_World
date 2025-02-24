@@ -13,7 +13,7 @@ const AddProduct = () => {
   const [subcategories, setSubcategories] = useState([]); // Store subcategories
   const [allSubcategories, setAllSubcategories] = useState([]); // Store all subcategories
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(false); 
   const [products, setProducts] = useState([]); // Store fetched products
   const [loading, setLoading] = useState(false); // Show loader while fetching
@@ -36,8 +36,9 @@ const AddProduct = () => {
       axios
         .get(`http://localhost:5001/api/subcategory/get?categoryId=${selectedCategory}`)
         .then((response) => {
-          if (Array.isArray(response.data)) {
-            setSubcategories(response.data);
+           if (response.data && Array.isArray(response.data.subCategories)) {
+          setSubcategories(response.data.subCategories);
+              
           } else {
             console.error("Unexpected response format:", response.data);
             setSubcategories([]);

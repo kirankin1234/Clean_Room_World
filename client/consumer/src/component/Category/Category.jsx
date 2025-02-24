@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card, Row, Col } from "antd";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Category = () => {
   const { id } = useParams(); // Get category ID from the URL
   const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [subcategories, setSubcategories] = useState([]);
+  const { Meta } = Card;
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const fetchCategoryDetails = async () => {
@@ -31,10 +35,9 @@ const Category = () => {
         const response = await fetch(`http://localhost:5001/api/category/${id}`);
         const data = await response.json();
         console.log("Fetched Category Data:", data); 
-        
+  
         if (data.category) {  // ✅ Ensure the category exists before setting state
           setCategory(data.category);
-          setSubcategories(data.category.subcategories || []);
         }
       } catch (error) {
         console.error("Error fetching category details:", error);
@@ -43,8 +46,20 @@ const Category = () => {
       }
     };
   
+    const fetchSubcategories = async () => {
+      try {
+        const subcategoriesResponse = await axios.get(`http://localhost:5001/api/subcategory/get/${id}`);
+        console.log("Fetched Subcategories Data:", subcategoriesResponse.data);
+        setSubcategories(subcategoriesResponse.data.subcategories || []);
+      } catch (error) {
+        console.error("Error fetching subcategories:", error);
+      }
+    };
+  
     fetchCategoryDetails();
+    fetchSubcategories();
   }, [id]);
+  
 
   
 
@@ -53,27 +68,29 @@ const Category = () => {
   if (!category) return <p>Category not found</p>;
 
   return (
-     <div style={{ padding: "20px" }}>
-      <h2>{category?.name || "No Name Available"}</h2>
-      <p>{category?.shortDescription || "No Description"}</p>
+     <div style={{ padding: "0px 20px 20px 20px" }}>
+      <h2 style={{paddingLeft:'25%'}}>{category?.name || "No Name Available"}</h2>
+      <p style={{fontSize:'18px'}}>{category?.shortDescription || "No Description"}</p>
 
       {/* ✅ Subcategories Section */}
       <Row gutter={[16, 16]}>
         {subcategories.length > 0 ? (
           subcategories.map((subcategory) => (
-            <Col xs={24} sm={12} md={8} lg={6} key={subcategory._id}>
+            <Col style={{paddingTop:'30px'}} xs={24} sm={12} md={8} lg={6} key={subcategory._id}>
               <Card
                 hoverable
-                style={{ width: "230px", height: "250px" }}
+                style={{padding:'7px 7px 7px 7px', width:'230px', height:'250px'}}
+
                 cover={
                   <img
                     alt={subcategory.name}
                     src={`http://localhost:5001/uploads/${subcategory.image}`}
-                    style={{ height: "150px", objectFit: "cover", borderRadius: "12px" }}
+                    style={{ height: "150px", objectFit: "cover", borderRadius:'12px', backgroundColor:'white' }}
                   />
                 }
+                onClick={() => navigate(`/subcategory/${subcategory._id}`)}
               >
-                <Meta title={subcategory.name} style={{ textAlign: "center", fontWeight: "bold" }} />
+                <Meta title={subcategory.name} style={{textAlign: "center", fontSize: "12px", fontWeight: "bold", padding:'0px 0px 0px 0px' }} />
               </Card>
             </Col>
           ))
@@ -81,7 +98,8 @@ const Category = () => {
           <p>No Subcategories Available</p>
         )}
       </Row>
-      <p>{category?.detailedDescription || "No Detailed Description"}</p>
+      <h2 style={{paddingTop:'20px',margin:'0'}}>Details</h2>
+      <p style={{fontSize:'18px'}}>{category?.detailedDescription || "No Detailed Description"}</p>
     </div>
   )
 } 

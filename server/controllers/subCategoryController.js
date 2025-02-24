@@ -62,6 +62,24 @@ const getSubcategories = async (req, res) => {
   }
 };
 
+const getSubcategoryById = async (req, res) =>{
+  try {
+    const { subcategoryId } = req.params;
+    // console.log("Fetching subcategory with ID:", subcategoryId); // Debugging
+
+    const subcategory = await SubCategory.findById(subcategoryId);
+
+    if (!subcategory) {
+      return res.status(404).json({ message: "Subcategory not found" });
+    }
+
+    res.json({ subcategory, message: "Subcategory fetched successfully" });
+  } catch (error) {
+    console.error("Error fetching subcategory:", error);
+    res.status(500).json({ message: "Error fetching subcategory", error });
+  }
+}
+
 // const getSubcategories = async (req, res) => {
 //   try {
 //     console.log("Request Params:", req); // Debugging
@@ -134,4 +152,4 @@ const updateCategory = async (req, res) => {
 
 
 // Export all functions
-module.exports = { addSubCategory, getSubCategories, getSubcategories, deleteCategory, updateCategory };
+module.exports = { addSubCategory, getSubCategories, getSubcategories, getSubcategoryById, deleteCategory, updateCategory };

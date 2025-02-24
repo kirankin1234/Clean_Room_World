@@ -50,15 +50,19 @@ const AddSubcategory = () => {
     
     const fetchSubcategories = () => {
         axios.get("http://localhost:5001/api/subcategory/get")
-            .then((response) => {
-                console.log("Fetched subcategories:", response.data); // Debugging log
-                setSubcategories(response.data); 
-                console.log("Updated subcategories state:", subcategories);           
-            })
-            .catch((error) => {
-                console.error("Error fetching subcategories:", error);
-                setSubcategories([]); // Set empty array on error
-            });
+        .then((response) => {
+            console.log("Fetched subcategories:", response.data); 
+            if (Array.isArray(response.data.subCategories)) {
+                setSubcategories(response.data.subCategories); 
+            } else {
+                console.error("Subcategories is not an array:", response.data);
+                setSubcategories([]); // Reset to an empty array if incorrect format
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching subcategories:", error);
+            setSubcategories([]); // Reset to avoid undefined issues
+        });
     };
 
     // const handleCategoryChange = (categoryId) => {

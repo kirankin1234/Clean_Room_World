@@ -7,11 +7,11 @@ import { useState, useEffect } from 'react';
 const { TextArea } = Input;
 
 
-const AddProduct = () => 
-    {
+const AddProduct = () => {
 
   const [categories, setCategories] = useState([]); // Store categories
   const [subcategories, setSubcategories] = useState([]); // Store subcategories
+  const [allSubcategories, setAllSubcategories] = useState([]); // Store all subcategories
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false); 
@@ -19,14 +19,6 @@ const AddProduct = () =>
   const [loading, setLoading] = useState(false); // Show loader while fetching
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
-
-
-
-
-
-
-
-
 
   useEffect(() => {
     axios.get("http://localhost:5001/api/category/get")
@@ -41,15 +33,36 @@ const AddProduct = () =>
   // Fetch subcategories based on selected category
   useEffect(() => {
     if (selectedCategory) {
-        axios.get(`http://localhost:5001/api/subcategory/get?categoryId=${selectedCategory}`)
-            .then((response) => {
-                setSubcategories(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching subcategories:", error);
-            });
+      axios
+        .get(`http://localhost:5001/api/subcategory/get?categoryId=${selectedCategory}`)
+        .then((response) => {
+           if (response.data && Array.isArray(response.data.subCategories)) {
+          setSubcategories(response.data.subCategories);
+              
+          } else {
+            console.error("Unexpected response format:", response.data);
+            setSubcategories([]);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching subcategories:", error);
+          setSubcategories([]);
+        });
+    } else {
+      setSubcategories([]); // Clear subcategories when no category is selected
     }
   }, [selectedCategory]);
+//   useEffect(() => {
+//     if (selectedCategory) {
+//         axios.get(http://localhost:5001/api/subcategory/get?categoryId=${selectedCategory})
+//             .then((response) => {
+//                 setSubcategories(response.data);
+//             })
+//             .catch((error) => {
+//                 console.error("Error fetching subcategories:", error);
+//             });
+//     }
+//   }, [selectedCategory]);
 
    // Handle Category Selection
    const handleCategoryChange = (categoryId) => {
@@ -69,21 +82,6 @@ const AddProduct = () =>
     setSelectedSubcategory(value);
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   const handleUpdateProduct = async (values, productId) => {
     try {
         const response = await axios.put(`http://localhost:5001/api/product/update/${productId}`, values);
